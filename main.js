@@ -27,6 +27,6 @@ function send(client, msg){
     wss.clients.forEach((c)=>{
         if(c!=client && c.readyState==WebSocket.OPEN){
             c.send(msg);
-        }
+        };
     });
 }
