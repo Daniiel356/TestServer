@@ -1,7 +1,6 @@
 const http = require('http');
 const { WebSocketServer } = require('ws');
 
-// Render asigna el puerto automáticamente en process.env.PORT
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
