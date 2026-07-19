@@ -15,10 +15,18 @@ wss.on('connection', (ws) => {
 
     ws.on('message', (message) => {
         console.log(`Mensaje recibido: ${message}`);
-        ws.send(`Eco: ${message}`);
+        send(ws, message);
     });
 });
 
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
+function send(client, msg){
+    wss.clients.forEach((c)=>{
+        if(c!=client && c.readyState==WebSocket.OPEN){
+            c.send(msg);
+        }
+    });
+}
