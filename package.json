@@ -1,0 +1,20 @@
+{
+  "name": "test-server",
+  "version": "1.0.0",
+  "description": "Server for a simple creative game :)",
+  "homepage": "https://github.com/Daniiel356/TestServer#readme",
+  "bugs": {
+    "url": "https://github.com/Daniiel356/TestServer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daniiel356/TestServer.git"
+  },
+  "license": "ISC",
+  "author": "Daniiel356",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
