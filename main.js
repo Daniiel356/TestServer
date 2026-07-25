@@ -41,12 +41,12 @@ wss.on('connection', (e) => {
         if(host && host.id==conn.id)host=clients[0]||-1;
 
         console.log("Cliente",conn.id,"desconectado");
-        console.log("host:", host);
+        console.log("host:", host.id);
     });
 
     e.send(JSON.stringify({id: conn.id, host: host.id==conn.id}));
     console.log("Cliente conectado con la id: "+conn.id);
-    console.log("host:", host);
+    console.log("host:", host.id);
 });
 
 server.listen(PORT, () => {
