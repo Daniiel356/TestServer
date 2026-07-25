@@ -50,7 +50,7 @@ server.listen(PORT, () => {
 });
 
 function send(client, msg){
-    if(host.id==-1)return;
+    if(host==null)return;
     if(host.id==client.id){
         wss.clients.forEach((c) => {
             if(c !== client.ws && c.readyState === WebSocket.OPEN) {
@@ -58,7 +58,7 @@ function send(client, msg){
             }
         });
     }else{
-        if (host!==-1 &&host.ws.readyState === WebSocket.OPEN)host.ws.send(msg);
+        if (host!==null &&host.ws.readyState === WebSocket.OPEN)host.ws.send(msg);
     }
 }
 
@@ -69,7 +69,7 @@ function add(ws){
         nextId++;
     }
     const client={ws, id: nextId}
-    if(host==-1)host=client;
+    if(host==null)host=client;
     clients.push(client);
     return client;
 }
