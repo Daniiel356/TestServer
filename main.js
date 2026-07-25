@@ -2,9 +2,11 @@ const http = require('http');
 const { WebSocketServer, WebSocket } = require('ws'); 
 
 const PORT = process.env.PORT || 3000;
+let host=null;
+const clients=[];
 
 const server = http.createServer((req, res) => {
-        if (req.url === '/simular-dormir') {
+    if (req.url === '/simular-dormir') {
         res.writeHead(200, { 'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*' });
         res.end('Servidor apagándose...');
         
@@ -24,13 +26,20 @@ const server = http.createServer((req, res) => {
 
 const wss = new WebSocketServer({ server });
 
-wss.on('connection', (ws) => {
-    console.log('Cliente conectado exitosamente');
+wss.on('connection', (e) => {
+    const conn=add(e);
 
-    ws.on('message', (message) => {
+    e.on('message', (message) => {
         const msgString = message.toString();
-        send(ws, msgString);
+        send(conn, msgString);
     });
+
+    e.on('close', ()=>{
+        const index=clients.findIndex((e)=>e.id==conn.id);
+        if(index==-1)return;
+        clients.splice(index, 1);
+        if(host.id==conn.id)host=clients[0]||-1;
+    })
 });
 
 server.listen(PORT, () => {
@@ -38,9 +47,26 @@ server.listen(PORT, () => {
 });
 
 function send(client, msg){
-    wss.clients.forEach((c) => {
-        if (c !== client && c.readyState === WebSocket.OPEN) {
-            c.send(msg);
-        }
-    });
+    if(host.id==-1)return;
+    if(host.id==client.id){
+        wss.clients.forEach((c) => {
+            if(c !== client.ws && c.readyState === WebSocket.OPEN) {
+                c.send(msg);
+            }
+        });
+    }else{
+        if (host!==-1 &&host.ws.readyState === WebSocket.OPEN)host.ws.send(msg);
+    }
+}
+
+function add(ws){
+    let nextId = 0;
+
+    while (clients.some(c => c.id === nextId)) {
+        nextId++;
+    }
+    const client={ws, id: nextId}
+    if(host==-1)host=client;
+    clients.push(client);
+    return client;
 }
