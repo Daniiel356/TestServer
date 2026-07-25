@@ -4,7 +4,7 @@ const { WebSocketServer } = require('ws');
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.writeHead(200, { 'content-type': 'text/plain', 'access-control-allow-origin': '*'});
     res.end('Servidor WebSocket activo');
 });
 
