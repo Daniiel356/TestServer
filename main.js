@@ -38,7 +38,7 @@ wss.on('connection', (e) => {
         const index=clients.findIndex((e)=>e.id==conn.id);
         if(index==-1)return;
         clients.splice(index, 1);
-        if(host.id==conn.id)host=clients[0]||-1;
+        if(host && host.id==conn.id)host=clients[0]||-1;
     });
 
     e.send(JSON.stringify({...conn, host: host.id==conn.id}));
