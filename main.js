@@ -69,7 +69,7 @@ function add(ws){
         nextId++;
     }
     const client={ws, id: nextId}
-    if(host==null)host=client;
+    if(host===null || clients.length==0)host=client;
     clients.push(client);
     return client;
 }
