@@ -4,6 +4,17 @@ const { WebSocketServer, WebSocket } = require('ws');
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
+        if (req.url === '/simular-dormir') {
+        res.writeHead(200, { 'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*' });
+        res.end('Servidor apagándose...');
+        
+        console.log('Cerrando el servidor voluntariamente para pruebas...');
+        
+        wss.close(() => {
+            process.exit(0); 
+        });
+        return;
+    }
     res.writeHead(200, { 
         'Content-Type': 'text/plain', 
         'Access-Control-Allow-Origin': '*'
