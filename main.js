@@ -39,7 +39,10 @@ wss.on('connection', (e) => {
         if(index==-1)return;
         clients.splice(index, 1);
         if(host.id==conn.id)host=clients[0]||-1;
-    })
+    });
+
+    e.send(JSON.stringify({...conn, host: host.id==conn.id}));
+    console.log("Cliente conectado con la id: "+conn.id);
 });
 
 server.listen(PORT, () => {
