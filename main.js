@@ -14,7 +14,6 @@ wss.on('connection', (ws) => {
     console.log('Cliente conectado exitosamente');
 
     ws.on('message', (message) => {
-        console.log(`Mensaje recibido: ${message}`);
         send(ws, message);
     });
 });
