@@ -51,7 +51,7 @@ wss.on('connection', (e) => {
     });
 
     // CORRECCIÓN: Evitamos crash usando host?.id de forma segura
-    sendJSON(conn, { id: conn.id, host: host?.id === conn.id });
+    sendJSON(conn, { first: true, id: conn.id, host: host?.id === conn.id });
     console.log("Cliente conectado con la id: " + conn.id);
     console.log("host:", host?.id);
 });
